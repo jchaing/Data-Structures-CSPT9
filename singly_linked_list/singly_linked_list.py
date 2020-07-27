@@ -25,6 +25,9 @@ class LinkedList:
         self.tail = None
         self.length = 0
 
+    def get_length(self):
+        return self.length
+
     def add_to_head(self, value):
         new_node = Node(value, self.head)
         self.head = new_node
@@ -52,6 +55,10 @@ class LinkedList:
     def remove_head(self):
         # empty LL
         if self.head is None:
+            print("REMOVE HEAD")
+            print(f"Head: {self.head}")
+            print(f"Tail: {self.tail}")
+            print(f"Length: {self.length}")
             return None
         # list with 1 node
         elif self.head == self.tail:
@@ -59,27 +66,68 @@ class LinkedList:
             self.head = None
             self.tail = None
             self.length -= 1
+            print("REMOVE HEAD")
+            print(f"Head: {self.head}")
+            print(f"Tail: {self.tail}")
+            print(f"Length: {self.length}")
+            print(f"Removed head, {value}")
             return value
         # list with 2+ node
         else:
             value = self.head.get_value()
             self.head = self.head.get_next()
             self.length -= 1
+            print("REMOVE HEAD")
+            print(f"Head: {self.head}")
+            print(f"Tail: {self.tail}")
+            print(f"Length: {self.length}")
+            print(f"Removed head, {value}")
             return value
 
     def remove_tail(self):
-        pass
         # empty LL
+        if self.tail is None:
+            print("REMOVE TAIL")
+            print(f"Head: {self.head}")
+            print(f"Tail: {self.tail}")
+            print(f"Length: {self.length}")
+            return None
         # list with 1 node
+        elif self.tail == self.head:
+            value = self.tail.get_value()
+            self.head = None
+            self.tail = None
+            self.length -= 1
+            print("REMOVE TAIL")
+            print(f"Head: {self.head}")
+            print(f"Tail: {self.tail}")
+            print(f"Length: {self.length}")
+            print(f"Removed tail, {value}")
+            return value
         # list with 2+ node
+        else:
+            value = self.tail.get_value()
+            curr_node = self.head
+            while curr_node.get_next() is not self.tail:
+                curr_node = curr_node.get_next()
+            curr_node.set_next(None)
+            self.tail = curr_node
+            self.length -= 1
+            print("REMOVE TAIL")
+            print(f"Head: {self.head}")
+            print(f"Tail: {self.tail}")
+            print(f"Length: {self.length}")
+            print(f"Removed tail, {value}")
+            return value
 
-    def contains():
-        pass
-        # 1. use a loop to iterate through LL
-        # 2. check if value of current node is the Value
-        # we're searching for
-        # 3. return True if we find it, False if we
-        # reach the end of LL
+    def contains(self, value):
+        curr_node = self.head
+        # check if value of current node is the Value
+        while curr_node is not None:
+            if value == curr_node.get_value():
+                return True
+            curr_node = curr_node.get_next()
+        return False
 
     def get_max(self):
         # empty list
@@ -94,14 +142,56 @@ class LinkedList:
             if curr_node.get_value() > curr_max:
                 curr_max = curr_node.get_value()
             curr_node = curr_node.get_next()
-
+        print(f"Max is {curr_max}")
         return curr_max
+
+    def find_middle(self):
+        # Doing this in 1 pass, without length attr
+        mid_point = self.head
+        end_point = self.head
+        while end_point is not None and end_point.get_next() is not None:
+            mid_point = mid_point.get_next()
+            end_point = end_point.get_next().get_next()
+
+        print(f"mid_point: {mid_point.value}")
+        return mid_point.value
 
 
 linked_list = LinkedList()
 
-linked_list.add_to_head(10)
+# linked_list.add_to_head(10)
+# linked_list.add_to_head(11)
+# linked_list.add_to_head(12)
 
-linked_list.add_to_tail(2)
-linked_list.add_to_tail(3)
-linked_list.add_to_tail(4)
+# linked_list.add_to_tail(2)
+# linked_list.add_to_tail(3)
+# linked_list.add_to_tail(4)
+
+# linked_list.add_to_head(20)
+# linked_list.add_to_tail(40)
+# linked_list.add_to_tail(60)
+# linked_list.remove_head()
+
+# linked_list.add_to_head(20)
+# linked_list.add_to_head(40)
+# linked_list.add_to_head(60)
+# linked_list.remove_tail()
+
+# linked_list.add_to_head(20)
+# linked_list.add_to_tail(40)
+# linked_list.add_to_tail(60)
+# linked_list.contains()
+
+# linked_list.add_to_head(20)
+# linked_list.add_to_head(10)
+# linked_list.contains(20)
+
+# linked_list.add_to_head(20)
+# linked_list.add_to_tail(40)
+# linked_list.add_to_tail(60)
+# linked_list.get_max()
+
+# linked_list.add_to_head(20)
+# linked_list.add_to_head(10)
+# linked_list.add_to_head(30)
+# linked_list.find_middle()
