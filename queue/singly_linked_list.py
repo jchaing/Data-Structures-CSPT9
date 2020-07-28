@@ -108,10 +108,11 @@ class LinkedList:
         else:
             value = self.tail.get_value()
             curr_node = self.head
-            while curr_node.get_next() is not self.tail:
+            prev_node = None
+            while curr_node.next_node is not None:
+                prev_node = curr_node
                 curr_node = curr_node.get_next()
-            curr_node.set_next(None)
-            self.tail = curr_node
+            prev_node.set_next(None)
             self.length -= 1
             print("REMOVE TAIL")
             print(f"Head: {self.head}")
@@ -142,19 +143,8 @@ class LinkedList:
             if curr_node.get_value() > curr_max:
                 curr_max = curr_node.get_value()
             curr_node = curr_node.get_next()
-        print(f"Max is {curr_max}")
+
         return curr_max
-
-    def find_middle(self):
-        # Doing this in 1 pass, without length attr
-        mid_point = self.head
-        end_point = self.head
-        while end_point is not None and end_point.get_next() is not None:
-            mid_point = mid_point.get_next()
-            end_point = end_point.get_next().get_next()
-
-        print(f"mid_point: {mid_point.value}")
-        return mid_point.value
 
 
 linked_list = LinkedList()
@@ -185,13 +175,3 @@ linked_list = LinkedList()
 # linked_list.add_to_head(20)
 # linked_list.add_to_head(10)
 # linked_list.contains(20)
-
-# linked_list.add_to_head(20)
-# linked_list.add_to_tail(40)
-# linked_list.add_to_tail(60)
-# linked_list.get_max()
-
-# linked_list.add_to_head(20)
-# linked_list.add_to_head(10)
-# linked_list.add_to_head(30)
-# linked_list.find_middle()
