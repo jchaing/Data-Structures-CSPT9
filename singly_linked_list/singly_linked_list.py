@@ -156,6 +156,21 @@ class LinkedList:
         print(f"mid_point: {mid_point.value}")
         return mid_point.value
 
+    # How do you reverse a singly linked list without recursion?
+    # You may not store the list, or it's values, in another data structure.
+    def reverse_ll(self):
+        curr_node = self.head
+        next_node = curr_node.next
+        # head points to none
+        curr_node.set_next(None)
+        self.tail = curr_node
+        while next_node is not None:
+            prev_node = curr_node
+            curr_node = next_node
+            next_node = curr_node.get_next()
+            curr_node.set_next(prev_node)
+        self.head = curr_node
+
 
 linked_list = LinkedList()
 
@@ -195,3 +210,8 @@ linked_list = LinkedList()
 # linked_list.add_to_head(10)
 # linked_list.add_to_head(30)
 # linked_list.find_middle()
+
+linked_list.add_to_head(20)
+linked_list.add_to_tail(40)
+linked_list.add_to_tail(60)
+linked_list.reverse_ll()
