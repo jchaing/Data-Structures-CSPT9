@@ -4,9 +4,6 @@ as well as its next node in the List.
 """
 
 
-from typing import List
-
-
 class ListNode:
     def __init__(self, value, prev=None, next=None):
         self.prev = prev
@@ -14,7 +11,23 @@ class ListNode:
         self.next = next
 
     def __str__(self):
-        return f"Value: {self.value}, Prev: {self.prev}"
+        return f"Value: {self.value}, Prev: {self.prev}, Next: {self.next}"
+
+    def insert_after(self, value):
+        current_next = self.next
+        self.next = ListNode(value, self, current_next)
+        if current_next:
+            current_next.prev = self.next
+
+    """Wrap the given value in a ListNode and insert it
+    before this node. Note that this node could already
+    have a previous node it is point to."""
+
+    def insert_before(self, value):
+        current_prev = self.prev
+        self.prev = ListNode(value, current_prev, self)
+        if current_prev:
+            current_prev.next = self.prev
 
     def delete(self):
         if self.prev:
@@ -54,10 +67,10 @@ class DoublyLinkedList:
             self.head = new_node
         self.length += 1
 
-        print("ADD TO HEAD")
-        print(f"Head: {self.head}")
-        print(f"Tail: {self.tail}")
-        print(f"Length: {self.length}")
+        # print("ADD TO HEAD")
+        # print(f"Head: {self.head}")
+        # print(f"Tail: {self.tail}")
+        # print(f"Length: {self.length}")
 
     """
     Removes the List's current head node, making the
@@ -66,6 +79,7 @@ class DoublyLinkedList:
     """
 
     def remove_from_head(self):
+        # value = self.head.value
         if self.head is None:
             return None
         elif self.head == self.tail:
@@ -74,22 +88,22 @@ class DoublyLinkedList:
             self.tail = None
             self.length -= 1
 
-            print("REMOVE FROM HEAD")
-            print(f"Head: {self.head}")
-            print(f"Tail: {self.tail}")
-            print(f"Length: {self.length}")
-            print(f"Removed: {curr_head}")
+            # print("REMOVE FROM HEAD")
+            # print(f"Head: {self.head}")
+            # print(f"Tail: {self.tail}")
+            # print(f"Length: {self.length}")
+            # print(f"Removed: {curr_head}")
             return curr_head
         else:
             curr_head = self.head.value
             self.head = self.head.next
             self.length -= 1
 
-            print("REMOVE FROM HEAD")
-            print(f"Head: {self.head}")
-            print(f"Tail: {self.tail}")
-            print(f"Length: {self.length}")
-            print(f"Removed: {curr_head}")
+            # print("REMOVE FROM HEAD")
+            # print(f"Head: {self.head}")
+            # print(f"Tail: {self.tail}")
+            # print(f"Length: {self.length}")
+            # print(f"Removed: {curr_head}")
             return curr_head
 
     """
@@ -99,7 +113,8 @@ class DoublyLinkedList:
     """
 
     def add_to_tail(self, value):
-        new_node = ListNode(value, next=self.tail)
+
+        new_node = ListNode(value, prev=self.tail)
         if self.head is None and self.tail is None:
             self.head = new_node
             self.tail = new_node
@@ -108,10 +123,10 @@ class DoublyLinkedList:
             self.tail = new_node
         self.length += 1
 
-        print("ADD TO TAIL")
-        print(f"Head: {self.head}")
-        print(f"Tail: {self.tail}")
-        print(f"Length: {self.length}")
+        # print("ADD TO TAIL")
+        # print(f"Head: {self.head}")
+        # print(f"Tail: {self.tail}")
+        # print(f"Length: {self.length}")
         return new_node
 
     """
@@ -121,23 +136,33 @@ class DoublyLinkedList:
     """
 
     def remove_from_tail(self):
-        if self.tail is None:
+
+        # check if head and tail exists
+        if self.head is None and self.tail is None:
             return None
-        elif self.tail == self.head:
+
+        # store current tail value
+        curr_tail = self.tail.value
+
+        # depricate for removal of tail
+        self.length -= 1
+
+        # check if only 1 node
+        if self.tail == self.head:
             self.head = None
             self.tail = None
-            self.length -= 1
+        
+        # make current tail the previous tail
         else:
-            curr_tail = self.tail.value
             self.tail = self.tail.prev
-            self.length -= 1
 
-            print("REMOVE FROM TAIL")
-            print(f"Head: {self.head}")
-            print(f"Tail: {self.tail}")
-            print(f"Length: {self.length}")
-            print(f"Removed: {curr_tail}")
-            return curr_tail
+            # print("REMOVE FROM TAIL")
+            # print(f"Head: {self.head}")
+            # print(f"Tail: {self.tail}")
+            # print(f"Length: {self.length}")
+            # print(f"Removed: {curr_tail}")
+        print(f"Removed Tail: {curr_tail}")
+        return curr_tail
 
 
     """
@@ -234,9 +259,9 @@ class DoublyLinkedList:
         # node.prev.next = node.next
         # node.next.prev = node.prev
 
-        print(f"Head: {self.head}")
-        print(f"Tail: {self.tail}")
-        print(f"Length: {self.length}")
+        # print(f"Head: {self.head}")
+        # print(f"Tail: {self.tail}")
+        # print(f"Length: {self.length}")
 
 
     """
@@ -254,7 +279,7 @@ class DoublyLinkedList:
         curr_max = self.head.value
 
         # loop through
-        while curr_node is not None:
+        while curr_node:
             if curr_node.value > curr_max:
                 curr_max = curr_node.value
             curr_node = curr_node.next
@@ -264,10 +289,16 @@ class DoublyLinkedList:
         return curr_max
 
 
-# dll = DoublyLinkedList()
+dll = DoublyLinkedList()
 
 # dll.add_to_head(20)
 # dll.add_to_head(40)
+
+# dll.add_to_tail(20)
+# dll.add_to_tail(30)
+# dll.add_to_tail(40)
+# dll.add_to_tail(50)
+# dll.add_to_tail(60)
 
 # dll.add_to_head(20)
 # dll.add_to_head(40)
@@ -279,17 +310,25 @@ class DoublyLinkedList:
 
 # dll.add_to_head(20)
 # dll.add_to_head(40)
+# dll.add_to_head(60)
 # dll.remove_from_tail()
+
+# dll.add_to_tail(20)
+# dll.add_to_tail(40)
+dll.add_to_tail(60)
+dll.remove_from_tail()
 
 # dll.add_to_head(20)
 # dll.add_to_head(40)
 # dll.delete(dll.tail)
 
-# dll.add_to_head(20)
-# dll.add_to_head(40)
-# dll.add_to_head(60)
-# dll.add_to_head(80)
+# dll.add_to_tail(20)
 # dll.get_max()
+# dll.add_to_tail(40)
+# dll.get_max()
+# dll.add_to_tail(60)
+# dll.get_max()
+# dll.add_to_tail(80)
 
 # dll.add_to_head(20)
 # dll.add_to_head(40)
