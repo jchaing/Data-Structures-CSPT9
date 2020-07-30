@@ -114,12 +114,20 @@ class DoublyLinkedList:
 
     def add_to_tail(self, value):
 
+        # capture new ListNode with 'prev' pointing to current tail
         new_node = ListNode(value, prev=self.tail)
+
+        # if DLL is empty
         if self.head is None and self.tail is None:
             self.head = new_node
             self.tail = new_node
+
         else:
+
+            # have next tail point to new node
             self.tail.next = new_node
+
+            # set tail point to new node
             self.tail = new_node
         self.length += 1
 
