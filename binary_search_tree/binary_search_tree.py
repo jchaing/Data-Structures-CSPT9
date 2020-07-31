@@ -10,6 +10,12 @@ This part of the project comprises two days:
    on the BSTNode class.
 """
 
+import sys
+
+sys.path.append('../queue/')
+
+from queue import Queue
+
 
 class BSTNode:
     def __init__(self, value):
@@ -92,7 +98,26 @@ class BSTNode:
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        # 1. Base case - no more nodes in our subtree
+        # 2. Recursive case
+
+        fn(self.value)
+        if self.left is not None:  # if self.left:
+            self.left.for_each(fn)
+        if self.right is not None:  # if self.right:
+            self.right.for_each(fn)
+
+        # # iterative method
+        # curr_node = self
+        # fn(curr_node.value)
+        # stack =  # nodes you need to backtrack to
+        # while curr_node.left:
+        #     curr_node = curr_node.left
+        #     fn(curr_node)
+        #     # add it to the stack
+        # # pop off the stack
+        # # try to go right
+
 
     # STRETCH
     def delete(self, value):
@@ -117,12 +142,11 @@ class BSTNode:
             if self.left:
                 # go left with recursion!
                 self.left.in_order_print()
-            #print
+            print(self.value)
             if self.right:
                 # go right wtih recursion!
-                self.left.in_order_print()
+                self.right.in_order_print()
 
-        pass
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
@@ -138,14 +162,24 @@ class BSTNode:
     # Left, Root, Right
     def dft_print(self):
         # create a stack
+        stack = []
         # push some initial value(s)? onto the stack
+        stack.append(self)
         # while stack is not empty
-            # pop ???
-            # print ???
+        while len(stack) > 0:
+            # pop Node off top of stack to traverse its L&R Children
+            current = stack.pop()
+
+            # print current value
+            print(current.value)
+
             # push ???
+            if current.right:
+                stack.append(current.right)
+            if current.left:
+                stack.append(current.left)
         # done when stack is empty
 
-        pass
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -163,37 +197,37 @@ class BSTNode:
 This code is necessary for testing the `print` methods
 """
 bst = BSTNode(1)
-print(f"bst {bst}")
+# print(f"bst {bst}")
 
 bst.insert(8)
-print(f"bst {bst}")
+# print(f"bst {bst}")
 bst.insert(5)
-print(f"bst {bst}")
+# print(f"bst {bst}")
 bst.insert(7)
-print(f"bst {bst}")
+# print(f"bst {bst}")
 bst.insert(6)
-print(f"bst {bst}")
+# print(f"bst {bst}")
 bst.insert(3)
-print(f"bst {bst}")
+# print(f"bst {bst}")
 bst.insert(4)
-print(f"bst {bst}")
+# print(f"bst {bst}")
 bst.insert(2)
-print(f"bst {bst}")
+# print(f"bst {bst}")
 
-# bst.bft_print()
-# bst.dft_print()
+bst.bft_print()
+bst.dft_print()
 
-# print("elegant methods")
-# print("pre order")
-# bst.pre_order_dft()
-# print("in order")
-# bst.in_order_dft()
-# print("post order")
-# bst.post_order_dft()
+print("elegant methods")
+print("pre order")
+bst.pre_order_dft()
+print("in order")
+bst.in_order_print()
+print("post order")
+bst.post_order_dft()
 
 # print(bst.contains(33))
 # print(bst.contains(3))
 # print(bst.contains(7))
 # print(bst.contains(100))
 
-print(bst.get_max())
+# print(bst.get_max())
